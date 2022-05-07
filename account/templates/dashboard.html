@@ -99,7 +99,7 @@
             <p>Recently Accesed Course</p>
             <div class="card" style="width: 45vw; height: 15rem;">
                 <div class="bg-image hover-overlay ripple" data-mdb-ripple-color="light">
-                  <img src="https://mdbcdn.b-cdn.net/img/new/standard/nature/111.webp" class="img-fluid"/>
+                  <img src="https://wallpapercave.com/wp/wp6602034.jpg" class="img-fluid"/>
                   <a href="#!">
                     <div class="mask" style="background-color: rgba(251, 251, 251, 0.15);"></div>
                   </a>
@@ -110,104 +110,30 @@
                 </div>
             </div>
         </div>
-
+ 
         <div class="card">
             <p>Course Overview</p>
-
             <div class="row">
+            {% for course in course_list %}
                 <div class="col-6">
                     <div class="card" style="width: 40vw; height: 15rem;">
                         <div class="bg-image hover-overlay ripple" data-mdb-ripple-color="light">
-                          <img src="https://mdbcdn.b-cdn.net/img/new/standard/nature/111.webp" class="img-fluid"/>
-                          <a href="#!">
+                          <img src="https://wallpapercave.com/wp/wp6602034.jpg" class="img-fluid"/>
+                          <a href="{% url 'course' course.id %}">
                             <div class="mask" style="background-color: rgba(251, 251, 251, 0.15);"></div>
                           </a>
                         </div>
                         <div class="card-body">
-                          <p class="card-text">Dept. of CSE</p>
-                          <a href="#!" class="text-dark" ><h5 class="card-text">Web Programming</h5></a>
+                          <p class="card-text">Dept. of {{course.dept}}</p>
+                          <a href="{% url 'course' course.id %}" class="text-dark" ><h5 class="card-text">{{course.title}}</h5></a>
                         </div>
                     </div>
                 </div>
-                <div class="col-6">
-                    <div class="card" style="width: 40vw; height: 15rem;">
-                        <div class="bg-image hover-overlay ripple" data-mdb-ripple-color="light">
-                          <img src="https://mdbcdn.b-cdn.net/img/new/standard/nature/111.webp" class="img-fluid"/>
-                          <a href="#!">
-                            <div class="mask" style="background-color: rgba(251, 251, 251, 0.15);"></div>
-                          </a>
-                        </div>
-                        <div class="card-body">
-                          <p class="card-text">Dept. of CSE</p>
-                          <a href="#!" class="text-dark" ><h5 class="card-text">Web Programming</h5></a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="row">
-                <div class="col-6">
-                    <div class="card" style="width: 40vw; height: 15rem;">
-                        <div class="bg-image hover-overlay ripple" data-mdb-ripple-color="light">
-                          <img src="https://mdbcdn.b-cdn.net/img/new/standard/nature/111.webp" class="img-fluid"/>
-                          <a href="#!">
-                            <div class="mask" style="background-color: rgba(251, 251, 251, 0.15);"></div>
-                          </a>
-                        </div>
-                        <div class="card-body">
-                          <p class="card-text">Dept. of CSE</p>
-                          <a href="#!" class="text-dark" ><h5 class="card-text">Web Programming</h5></a>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-6">
-                    <div class="card" style="width: 40vw; height: 15rem;">
-                        <div class="bg-image hover-overlay ripple" data-mdb-ripple-color="light">
-                          <img src="https://mdbcdn.b-cdn.net/img/new/standard/nature/111.webp" class="img-fluid"/>
-                          <a href="#!">
-                            <div class="mask" style="background-color: rgba(251, 251, 251, 0.15);"></div>
-                          </a>
-                        </div>
-                        <div class="card-body">
-                          <p class="card-text">Dept. of CSE</p>
-                          <a href="#!" class="text-dark" ><h5 class="card-text">Web Programming</h5></a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="row">
-                <div class="col-6">
-                    <div class="card" style="width: 40vw; height: 15rem;">
-                        <div class="bg-image hover-overlay ripple" data-mdb-ripple-color="light">
-                          <img src="https://mdbcdn.b-cdn.net/img/new/standard/nature/111.webp" class="img-fluid"/>
-                          <a href="#!">
-                            <div class="mask" style="background-color: rgba(251, 251, 251, 0.15);"></div>
-                          </a>
-                        </div>
-                        <div class="card-body">
-                          <p class="card-text">Dept. of CSE</p>
-                          <a href="#!" class="text-dark" ><h5 class="card-text">Web Programming</h5></a>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-6">
-                    <div class="card" style="width: 40vw; height: 15rem;">
-                        <div class="bg-image hover-overlay ripple" data-mdb-ripple-color="light">
-                          <img src="https://mdbcdn.b-cdn.net/img/new/standard/nature/111.webp" class="img-fluid"/>
-                          <a href="#!">
-                            <div class="mask" style="background-color: rgba(251, 251, 251, 0.15);"></div>
-                          </a>
-                        </div>
-                        <div class="card-body">
-                          <p class="card-text">Dept. of CSE</p>
-                          <a href="#!" class="text-dark" ><h5 class="card-text">Web Programming</h5></a>
-                        </div>
-                    </div>
-                </div>
+              {% endfor %}
             </div>
         </div>
     </div>
+    
 
     {% include 'footer.html' %}
 
