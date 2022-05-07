@@ -18,7 +18,7 @@
         <!-- Collapsible wrapper -->
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <!-- Navbar brand -->
-            <a class="navbar-brand mt-2 mt-lg-0" href="#">
+            <a class="navbar-brand mt-2 mt-lg-0" href="{% url 'dashboard' %}">
                 <h1 id="elmsLogo">eLMS</h1>
             </a>
             <!-- Left links -->
@@ -27,7 +27,7 @@
                     <a class="nav-link " href="#">All courses</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link " href="#">Course search</a>
+                    <a class="nav-link " href="{% url 'search' %}">Course search</a>
                 </li>
             </ul>
             <!-- Left links -->
@@ -40,32 +40,32 @@
             <div class="dropdown">
                 <a class="dropdown-toggle d-flex align-items-center hidden-arrow" href="#" id="navbarDropdownMenuAvatar"
                     role="button" data-mdb-toggle="dropdown" aria-expanded="false">
-                    <img src="https://i0.wp.com/lifewithdenny.blog/wp-content/uploads/2020/09/226-2267516_male-shadow-circle-default-profile-image-round-hd.png?ssl=1"
-                        class="rounded-circle" height="35" alt="Profile picture" loading="lazy" />
+                    <img src="http://images6.fanpop.com/image/photos/36800000/Saul-Goodman-Breaking-Bad-saul-goodman-36839059-750-1000.jpg"
+                        class="rounded-circle" width="35" height="35" alt="Profile picture" loading="lazy" />
                 </a>
                 <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdownMenuAvatar">
                     <li>
-                        <a class="dropdown-item" href="#">011191150 Shahparan Rifat</a>
+                        <a class="dropdown-item" href="{% url 'profile' %}">011191150 Saul Goodman</a>
                     </li>
                     <hr>
                     <li>
-                        <a class="dropdown-item" href="#">Dashboard</a>
+                        <a class="dropdown-item" href="{% url 'dashboard' %}">Dashboard</a>
                     </li>
                     <li>
-                        <a class="dropdown-item" href="#">Profile</a>
+                        <a class="dropdown-item" href="{% url 'profile' %}">Profile</a>
                     </li>
                     <li>
                         <a class="dropdown-item" href="#">All coureses</a>
                     </li>
                     <li>
-                        <a class="dropdown-item" href="#">Course search</a>
+                        <a class="dropdown-item" href="{% url 'search' %}">Course search</a>
                     </li>
                     <li>
                         <a class="dropdown-item" href="#">Grades</a>
                     </li>
                     <hr>
                     <li>
-                        <a class="dropdown-item" href="#">Log out</a>
+                        <a class="dropdown-item" href="{% url 'home' %}">Log out</a>
                     </li>
                 </ul>
             </div>
