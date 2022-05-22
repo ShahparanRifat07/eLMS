@@ -9,6 +9,7 @@ class Course(models.Model):
     faculty = models.ForeignKey(Profile,on_delete=models.SET_NULL,null=True,blank=True)
     title = models.CharField(max_length=128)
     course_code = models.CharField(max_length=64)
+    dept = models.CharField(max_length=20)
     section = models.CharField(max_length=20)
     created_time = models.DateTimeField(default=timezone.now)
 

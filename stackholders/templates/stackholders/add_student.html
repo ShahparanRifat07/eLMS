@@ -39,7 +39,7 @@
             <h3 class="ms-auto me-auto">Add Student</h3>
         </div>
         <div class="card mb-3 p-3 noRedius">
-            <form method="POST" action="{% url 'add-student' %}">
+            <form method="POST" action="{% url 'stackholder:add-student' %}">
                 {% csrf_token %}
 
                 <div class="form-outline mb-4">

@@ -21,6 +21,11 @@
         .setColor {
             background-color: #EF6C00;
         }
+        .select {
+            height: 30px;
+            text-align: center;
+            border-radius: 5px;
+        }
     </style>
 
 </head>
@@ -33,7 +38,7 @@
             <h3 class="ms-auto me-auto">Add Faculty</h3>
         </div>
         <div class="card mb-3 p-3 noRedius">
-            <form method="POST" action="{% url 'add-faculty' %}">
+            <form method="POST" action="{% url 'stackholder:add-faculty' %}">
                 {% csrf_token %}
 
                 <div class="form-outline mb-4">
@@ -49,6 +54,17 @@
                 <div class="form-outline mb-4">
                     <input type="email" name="email" id="form1Example1" class="form-control" required />
                     <label class="form-label" for="form1Example1">Email</label>
+                </div>
+
+                <div class="mb-4">
+                    <select class="select w-100" name="dept">
+                        <div class="selectOption">
+                            <option selected disabled>Department</option>
+                            {% for dept in departments %}
+                                <option value="{{dept}}">{{dept}}</option>
+                            {% endfor %}
+                        </div>
+                    </select>
                 </div>
 
                 <div class="form-outline mb-4">

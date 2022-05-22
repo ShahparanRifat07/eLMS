@@ -58,7 +58,7 @@
         <div>
             <div class="card" style="width: 30rem;">
                 <div class="card-body">
-                    <form method="POST" action="{% url 'login' %}">
+                    <form method="POST" action="{% url 'stackholder:login' %}">
                         {% csrf_token %}
                         <!-- Email input -->
                         <div class="form-outline mb-4">

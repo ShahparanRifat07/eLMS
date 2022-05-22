@@ -1,9 +1,9 @@
-import profile
 from django.http import HttpResponse
 from django.shortcuts import render,redirect
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login, logout
 from .models import Profile
+from course.models import Course
 
 
 # Create your views here.
@@ -19,27 +19,27 @@ def userlogin(request):
         else:
             if(user.is_superuser):
                 login(request, user)
-                return redirect("admin-dashboard")
+                return redirect("stackholder:admin-dashboard")
             elif(user.profile.isFaculty()):
                 login(request, user)
-                return redirect("dashboard")
+                return redirect("stackholder:dashboard")
             else:
                 login(request, user)
-                return redirect("dashboard")
+                return redirect("stackholder:dashboard")
     else:
         if (request.user.is_authenticated):
             if(request.user.is_superuser):
-                return redirect("admin-dashboard")
+                return redirect("stackholder:admin-dashboard")
             elif(request.user.profile.isFaculty()):
-                return redirect("dashboard")
+                return redirect("stackholder:dashboard")
             else:
-                return redirect("dashboard")
+                return redirect("stackholder:dashboard")
         else:
             return render(request, 'stackholders/login.html')
 
 def user_logout(request):
     logout(request)
-    return redirect('login')
+    return redirect('stackholder:login')
 
 def dashboard(request):
     return render(request, 'stackholders/dashboard.html')
@@ -79,7 +79,7 @@ def add_student(request):
             profile = Profile(user = user,dept = dept)
             profile.save()
             
-            return redirect('admin-dashboard')
+            return redirect('stackholder:admin-dashboard')
         else:
             context = {
                 'departments' : departments
@@ -104,7 +104,7 @@ def add_faculty(request):
             user.save()
             profile = Profile(user = user,is_faculty=True,is_student=False)
             profile.save()
-            return redirect('admin-dashboard')
+            return redirect('stackholder:admin-dashboard')
         else:
             context = {
                 'departments' : departments
@@ -113,3 +113,29 @@ def add_faculty(request):
     else:
         return render(request, 'stackholders/no_access.html')
     
+
+
+def add_course(request):
+
+    departments = ['CSE','EEE','BBA','CIVIL']
+    sections = ['A','B','C','D','E','F','G','H']
+
+    if(request.user.is_superuser):
+        if(request.method == "POST"):
+            title = request.POST.get('title')
+            code = request.POST.get('code')
+            dept = request.POST.get('dept')
+            sec = request.POST.get('sec')
+            course = Course(title = title,course_code = code,dept = dept,section = sec)
+            course.save()
+            return redirect('stackholder:admin-dashboard')
+        else:
+            context = {
+                'departments' : departments,
+                'sections' : sections,
+            }
+            return render(request, 'stackholders/add_course.html',context)
+    else:
+        return render(request, 'stackholders/no_access.html')
+
+
