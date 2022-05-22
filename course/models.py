@@ -7,6 +7,7 @@ from django.utils import timezone
 
 class Course(models.Model):
     faculty = models.ForeignKey(Profile,on_delete=models.SET_NULL,null=True,blank=True)
+    student = models.ManyToManyField(Profile,null=True,blank=True,related_name='stu')
     title = models.CharField(max_length=128)
     course_code = models.CharField(max_length=64)
     dept = models.CharField(max_length=20)

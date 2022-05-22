@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <meta http-equiv="x-ua-compatible" content="ie=edge" />
+    <title>eLMS</title>
+    <!-- Font Awesome -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet" />
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap" rel="stylesheet" />
+    <!-- MDB -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/4.0.0/mdb.min.css" rel="stylesheet" />
+
+    <style>
+        .noRedius {
+            border-radius: 0;
+        }
+        
+        .setColor {
+            background-color: #EF6C00;
+        }
+        .select {
+            height: 30px;
+            text-align: center;
+            border-radius: 5px;
+        }
+    </style>
+
+</head>
+
+<body>
+
+    {% include "stackholders/navbar.html" %} {% if user.is_superuser %}
+    <div class="container">
+        <div class="card mt-4 p-2  setColor text-white noRedius">
+            <h3 class="ms-auto me-auto">Assign Faculty</h3>
+        </div>
+        <div class="card mb-3 p-3 noRedius">
+            <form method="POST" action="{% url 'stackholder:assign-faculty' course.id %}">
+                {% csrf_token %}
+
+                <div class="form-outline mb-4">
+                    <input type="text" value="{{course.title}}" name="title" id="form1Example1" class="form-control" disabled />
+                    <label class="form-label" for="form1Example1">Title</label>
+                </div>
+
+                <div class="form-outline mb-4">
+                    <input type="text" value="{{course.course_code}}" name="code" id="form1Example1" class="form-control" disabled />
+                    <label class="form-label" for="form1Example1">Course Code</label>
+                </div>
+
+
+                <div class="form-outline mb-4">
+                    <input type="text" value="" name="{{course.dept}}" id="form1Example1" class="form-control" disabled />
+                    <label class="form-label" for="form1Example1">Department</label>
+                </div>
+
+                <div class="form-outline mb-4">
+                    <input type="text" value="{{course.section}}" name="sec" id="form1Example1" class="form-control" disabled />
+                    <label class="form-label" for="form1Example1">Section</label>
+                </div>
+
+                <div class="mb-4">
+                    <select class="select w-100" name="faculty">
+                        <div class="selectOption">
+                            <option selected disabled>Faculty</option>
+
+                            {% for faculty in faculties %}
+                                <option value="{{faculty.user.id}}">{{faculty.user.first_name}} {{faculty.user.last_name}}</option>
+                            {% endfor %}
+                        </div>
+                    </select>
+                </div>
+
+
+
+
+                <!-- Submit button -->
+                <button type="submit" class="btn btn-dark btn-block">Assign</button>
+            </form>
+        </div>
+    </div>
+    {% else %}
+    <p>Sorry, you have no access</p>
+    {% endif %} {% include "stackholders/footer.html" %}
+
+
+
+    <!-- MDB -->
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/4.0.0/mdb.min.js"></script>
+</body>
+
+</html>

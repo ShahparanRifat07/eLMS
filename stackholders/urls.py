@@ -5,7 +5,11 @@ from .views import (admin_dashboard,
                     userlogin,
                     dashboard,
                     user_logout,
-                    add_course)
+                    add_course,
+                    assign_faculty,
+                    getAllStudents,
+                    assign_course,
+                    assign_course_to_student)
 
 app_name ='stackholder'
 urlpatterns = [
@@ -15,5 +19,9 @@ urlpatterns = [
     path('add_faculty/',add_faculty,name="add-faculty"),
     path('dashboard/',dashboard,name="dashboard"),
     path('add_course/',add_course,name="add-course"),
+    path('assign_faculty/<int:id>',assign_faculty,name="assign-faculty"),
+    path('assign_course/<int:id>',assign_course,name="assign-course"),
+    path('assign_course/<int:course_id>/student/<int:student_id>',assign_course,name="assign-course-student"),
+    path('all_students',getAllStudents,name="all-students"),
     path('logout',user_logout,name="logout"),
 ]

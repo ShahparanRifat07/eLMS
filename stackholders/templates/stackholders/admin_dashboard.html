@@ -35,7 +35,7 @@
             <div class="col-md-4">
                 <div class="card p-3">
                     Total Course
-                    <h1>100</h1>
+                    <h1>{{total_course}}</h1>
                 </div>
             </div>
         </div>
@@ -60,9 +60,11 @@
                             <tr>
                                 <td>
                                     <div class="d-flex align-items-center">
-                                        <img src="https://mdbootstrap.com/img/new/avatars/8.jpg" alt="" style="width: 45px; height: 45px" class="rounded-circle" />
+                                        <img src="https://mdbootstrap.com/img/new/avatars/8.jpg" alt=""
+                                            style="width: 45px; height: 45px" class="rounded-circle" />
                                         <div class="ms-3">
-                                            <p class="fw-bold mb-1">{{faculty.user.first_name}} {{faculty.user.last_name}}</p>
+                                            <p class="fw-bold mb-1">{{faculty.user.first_name}}
+                                                {{faculty.user.last_name}}</p>
                                             <p class="text-muted mb-0">{{faculty.user.email}}</p>
                                         </div>
                                     </div>
@@ -71,7 +73,7 @@
                                 <td>CSE</td>
                                 <td>
                                     <button type="button" class="btn btn-link btn-sm btn-rounded">
-                                            view
+                                        view
                                     </button>
                                 </td>
 
@@ -86,7 +88,7 @@
                 <div class="card p-2">
                     <div class="d-flex justify-content-between">
                         <h5>Students</h5>
-                        <a class="btn btn-dark btn-sm" href="">All students</a>
+                        <a class="btn btn-dark btn-sm" href="{% url 'stackholder:all-students' %}">All students</a>
                     </div>
 
                     <table class="table align-middle mt-2 mb-0 bg-white">
@@ -102,9 +104,11 @@
                             <tr>
                                 <td>
                                     <div class="d-flex align-items-center">
-                                        <img src="https://mdbootstrap.com/img/new/avatars/8.jpg" alt="" style="width: 45px; height: 45px" class="rounded-circle" />
+                                        <img src="https://mdbootstrap.com/img/new/avatars/8.jpg" alt=""
+                                            style="width: 45px; height: 45px" class="rounded-circle" />
                                         <div class="ms-3">
-                                            <p class="fw-bold mb-1">{{student.user.first_name}} {{student.user.last_name}}</p>
+                                            <p class="fw-bold mb-1">{{student.user.first_name}}
+                                                {{student.user.last_name}}</p>
                                             <p class="text-muted mb-0">{{student.user.username}}</p>
                                         </div>
                                     </div>
@@ -113,7 +117,7 @@
                                 <td>{{student.dept}}</td>
                                 <td>
                                     <button type="button" class="btn btn-link btn-sm btn-rounded">
-                                           view
+                                        view
                                     </button>
                                 </td>
                             </tr>
@@ -122,6 +126,54 @@
                     </table>
                 </div>
             </div>
+        </div>
+
+        <div class="card mt-5 p-2">
+            <div class="d-flex justify-content-between">
+                <h5>Courses</h5>
+                <a class="btn btn-dark btn-sm" href="">All Courses</a>
+            </div>
+
+            <table class="table align-middle mt-2 mb-0 bg-white">
+                <thead class="bg-light">
+                    <tr>
+                        <th>Title</th>
+                        <th>Dept</th>
+                        <th>Faculty</th>
+                        <th>Section</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for course in courses %}
+                    <tr>
+                        <td>
+                            <div class="d-flex align-items-center">
+                                <div class="ms-3">
+                                    <p class="fw-bold mb-1">{{course.title}}</p>
+                                </div>
+                            </div>
+                        </td>
+
+                        <td>{{course.dept}}</td>
+                        {% if course.faculty.user is not None %}
+                        <td>{{course.faculty.user.first_name}} {{course.faculty.user.last_name}}</td>
+                        {%else%}
+                        <td>
+                            <span class="badge badge-warning rounded-pill d-inline">Not Assigned</span>
+
+                        </td>
+                        {% endif %}
+                        <td>{{course.section}}</td>
+                        <td>
+                            <a href="{% url 'stackholder:assign-faculty' course.id %}" type="button" class="btn btn-link btn-sm btn-rounded">
+                                Assign
+                            </a>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
         </div>
     </div>
     {% else %}
