@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <meta http-equiv="x-ua-compatible" content="ie=edge" />
+    <title>eLMS</title>
+    <!-- Font Awesome -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet" />
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap" rel="stylesheet" />
+    <!-- MDB -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/4.0.0/mdb.min.css" rel="stylesheet" />
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+        
+        body {
+            background-color: #EEEEEE;
+        }
+        
+        .container>.card:nth-of-type(1) {
+            display: flex;
+            flex-direction: row;
+            margin-top: 15px;
+            margin-bottom: 15px;
+            padding: 20px;
+            height: 175px;
+            /* border: 1px solid red; */
+        }
+        
+        .container>.card:nth-of-type(1)>h1 {
+            margin-left: 10px;
+            margin-right: 10px;
+            font-weight: 200;
+        }
+        
+        .container>.card:nth-of-type(2) {
+            display: flex;
+            flex-direction: column;
+            margin-top: 15px;
+            margin-bottom: 15px;
+            padding: 20px;
+            height: 350px;
+            border-top: 3px solid #EF6C00;
+            /* border: 1px solid red; */
+        }
+        
+        .container>.card:nth-of-type(2)>div {
+            border: 1px solid #E0E0E0;
+            align-self: center;
+        }
+        
+        .container>.card:nth-of-type(3) {
+            border-top: 3px solid #EF6C00;
+            padding: 20px;
+        }
+        
+        .container>.card:nth-of-type(3) .card {
+            border: 1px solid #E0E0E0;
+            margin-bottom: 20px;
+        }
+        
+        .footer {
+            background-color: #EF6C00;
+            margin-top: 20px;
+            height: 80px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .footer p {
+            color: white;
+        }
+    </style>
+
+</head>
+
+
+
+<body>
+    <div>
+        {% include 'stackholders/navbar.html' %}
+    </div>
+
+
+    <div class="container">
+        <div class="card">
+            <a href=""><img class="rounded-circle" height="100px" width="100px" src="http://images6.fanpop.com/image/photos/36800000/Saul-Goodman-Breaking-Bad-saul-goodman-36839059-750-1000.jpg" alt="">
+            </a>
+            {% if profile.is_student %}
+            <h1>{{profile.user.username}}</h1>
+            {% endif %}
+            <h1>{{profile.user.first_name}} {{profile.user.last_name}}</h1>
+        </div>
+
+        <div class="card">
+            <p>Recently Accesed Course</p>
+            <div class="card" style="width: 45vw; height: 15rem;">
+                <div class="bg-image hover-overlay ripple" data-mdb-ripple-color="light">
+                    <img src="https://wallpapercave.com/wp/wp6602034.jpg" class="img-fluid" />
+                    <a href="#!">
+                        <div class="mask" style="background-color: rgba(251, 251, 251, 0.15);"></div>
+                    </a>
+                </div>
+                <div class="card-body">
+                    <p class="card-text">Dept. of CSE</p>
+                    <a href="#!" class="text-dark">
+                        <h5 class="card-text">Web Programming</h5>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <p>Course Overview</p>
+            <div class="row">
+                {% for course in courses %}
+
+                <div class="col-6">
+                    <div class="card" style="width: 40vw; height: 15rem;">
+                        <div class="bg-image hover-overlay ripple" data-mdb-ripple-color="light">
+                            <img src="https://wallpapercave.com/wp/wp6602034.jpg" class="img-fluid" />
+                            <a href="{% url 'course:detail-course' course.id %}">
+                                <div class="mask" style="background-color: rgba(251, 251, 251, 0.15);"></div>
+                            </a>
+                        </div>
+                        <div class="card-body">
+                            <p class="card-text">Dept. of {{course.dept}}</p>
+                            <a href="{% url 'course:detail-course' course.id %}" class="text-dark">
+                                <h5 class="card-text">{{course.course_code}}({{course.section}}): {{course.title}}</h5>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+
+    {% include 'stackholders/footer.html' %}
+
+    <!-- MDB -->
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/4.0.0/mdb.min.js"></script>
+</body>
+
+</html>

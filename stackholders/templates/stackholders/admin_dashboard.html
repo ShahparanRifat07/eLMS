@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <meta http-equiv="x-ua-compatible" content="ie=edge" />
+    <title>eLMS</title>
+    <!-- Font Awesome -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet" />
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap" rel="stylesheet" />
+    <!-- MDB -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/4.0.0/mdb.min.css" rel="stylesheet" />
+
+</head>
+
+<body>
+
+    {% include "stackholders/navbar.html" %} {% if user.is_superuser %}
+    <div class="container">
+        <div class="row mt-4 text-dark">
+            <div class="col-md-4">
+                <div class="card p-3">
+                    Total Students
+                    <h1>{{total_student}}</h1>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card p-3">
+                    Total Faculty
+                    <h1>{{total_faculty}}</h1>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card p-3">
+                    Total Course
+                    <h1>{{total_course}}</h1>
+                </div>
+            </div>
+        </div>
+
+        <div class="row mt-4 text-dark">
+            <div class="col-md-6">
+                <div class="card p-2">
+                    <div class="d-flex justify-content-between">
+                        <h5>Faculties</h5>
+                        <a class="btn btn-dark btn-sm" href="{% url 'stackholder:all-faculties' %}">All faculties</a>
+                    </div>
+                    <table class="table align-middle mt-2 mb-0 bg-white">
+                        <thead class="bg-light">
+                            <tr>
+                                <th>Name</th>
+                                <th>Dept.</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for faculty in faculties %}
+                            <tr>
+                                <td>
+                                    <div class="d-flex align-items-center">
+                                        <img src="https://mdbootstrap.com/img/new/avatars/8.jpg" alt=""
+                                            style="width: 45px; height: 45px" class="rounded-circle" />
+                                        <div class="ms-3">
+                                            <p class="fw-bold mb-1">{{faculty.user.first_name}}
+                                                {{faculty.user.last_name}}</p>
+                                            <p class="text-muted mb-0">{{faculty.user.email}}</p>
+                                        </div>
+                                    </div>
+                                </td>
+
+                                <td>{{faculty.dept}}</td>
+                                <td>
+                                    <a href="{% url 'stackholder:profile' faculty.user.id %}" type="button" class="btn btn-link btn-sm btn-rounded">
+                                        view
+                                    </a>
+                                </td>
+
+                            </tr>
+                            {%endfor%}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div class="col-md-6">
+                <div class="card p-2">
+                    <div class="d-flex justify-content-between">
+                        <h5>Students</h5>
+                        <a class="btn btn-dark btn-sm" href="{% url 'stackholder:all-students' %}">All students</a>
+                    </div>
+
+                    <table class="table align-middle mt-2 mb-0 bg-white">
+                        <thead class="bg-light">
+                            <tr>
+                                <th>Name & ID</th>
+                                <th>Dept.</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for student in students %}
+                            <tr>
+                                <td>
+                                    <div class="d-flex align-items-center">
+                                        <img src="https://mdbootstrap.com/img/new/avatars/8.jpg" alt=""
+                                            style="width: 45px; height: 45px" class="rounded-circle" />
+                                        <div class="ms-3">
+                                            <p class="fw-bold mb-1">{{student.user.first_name}}
+                                                {{student.user.last_name}}</p>
+                                            <p class="text-muted mb-0">{{student.user.username}}</p>
+                                        </div>
+                                    </div>
+                                </td>
+
+                                <td>{{student.dept}}</td>
+                                <td>
+                                    <a href="{% url 'stackholder:profile' student.user.id %}" type="button" class="btn btn-link btn-sm btn-rounded">
+                                        view
+                                    </a>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <div class="card mt-5 p-2">
+            <div class="d-flex justify-content-between">
+                <h5>Courses</h5>
+                <a class="btn btn-dark btn-sm" href="">All Courses</a>
+            </div>
+
+            <table class="table align-middle mt-2 mb-0 bg-white">
+                <thead class="bg-light">
+                    <tr>
+                        <th>Title</th>
+                        <th>Dept</th>
+                        <th>Faculty</th>
+                        <th>Section</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for course in courses %}
+                    <tr>
+                        <td>
+                            <div class="d-flex align-items-center">
+                                <div class="ms-3">
+                                    <p class="fw-bold mb-1">{{course.title}}</p>
+                                </div>
+                            </div>
+                        </td>
+
+                        <td>{{course.dept}}</td>
+                        {% if course.faculty.user is not None %}
+                        <td>{{course.faculty.user.first_name}} {{course.faculty.user.last_name}}</td>
+                        {%else%}
+                        <td>
+                            <span class="badge badge-warning rounded-pill d-inline">Not Assigned</span>
+
+                        </td>
+                        {% endif %}
+                        <td>{{course.section}}</td>
+                        <td>
+                            <a href="{% url 'stackholder:assign-faculty' course.id %}" type="button" class="btn btn-link btn-sm btn-rounded">
+                                Assign
+                            </a>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+    {% else %}
+    <p>Sorry, you have no access</p>
+    {% endif %} {% include "stackholders/footer.html" %}
+
+
+
+    <!-- MDB -->
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/4.0.0/mdb.min.js"></script>
+</body>
+
+</html>

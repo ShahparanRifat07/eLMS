@@ -1,0 +1,86 @@
+<style>
+    #elmsLogo {
+        color: #EF6C00;
+    }
+</style>
+
+<!-- Navbar -->
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <!-- Container wrapper -->
+    <div class="container-fluid">
+        <!-- Toggle button -->
+        <button class="navbar-toggler" type="button" data-mdb-toggle="collapse" data-mdb-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="fas fa-bars"></i>
+        </button>
+
+        <!-- Collapsible wrapper -->
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <!-- Navbar brand -->
+            <a class="navbar-brand mt-2 mt-lg-0" href="{% url 'stackholder:dashboard' %}">
+                {% comment %} {% % url 'dashboard' %} {% endcomment %}
+                <h1 id="elmsLogo">eLMS</h1>
+            </a>
+            <!-- Left links -->
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                <li class="nav-item">
+                    <a class="nav-link " href="{% url 'course:all-course' %}">All courses</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link " href="{% url 'course:search' %}">Course search</a> {% comment %} {% url 'search' %} {% endcomment %}
+                </li>
+
+            </ul>
+            <!-- Left links -->
+        </div>
+        <!-- Collapsible wrapper -->
+
+        <!-- Right elements -->
+        <div class="d-flex align-items-center">
+            {% if user.is_superuser %}
+            <a class="text-reset me-3" href="{% url 'stackholder:add-faculty' %}">
+                <span><i class="fa-solid fa-graduation-cap"></i></span> Faculty
+            </a>
+            <a class="text-reset me-3" href="{% url 'stackholder:add-student' %}">
+                <span><i class="fa-solid fa-user"></i></span> Student
+            </a>
+            <a class="text-reset me-3" href="{% url 'stackholder:add-course' %}">
+                <span><i class="fa-solid fa-video"></i></span> Course
+            </a>
+            {% endif %}
+            <!-- Avatar -->
+            <div class="dropdown">
+                <a class="dropdown-toggle d-flex align-items-center hidden-arrow" href="#" id="navbarDropdownMenuAvatar" role="button" data-mdb-toggle="dropdown" aria-expanded="false">
+                    <img src="http://images6.fanpop.com/image/photos/36800000/Saul-Goodman-Breaking-Bad-saul-goodman-36839059-750-1000.jpg" class="rounded-circle" width="35" height="35" alt="Profile picture" loading="lazy" />
+                </a>
+                <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdownMenuAvatar">
+                    <li>
+                        <a class="dropdown-item" href="{% url 'stackholder:profile' user.id %}">011191150 Saul Goodman</a> {% comment %} {% url 'profile' %} {% endcomment %}
+                    </li>
+                    <hr>
+                    <li>
+                        <a class="dropdown-item" href="{% url 'stackholder:dashboard' %}">Dashboard</a> {% comment %} {% url 'dashboard' %} {% endcomment %}
+                    </li>
+                    <li>
+                        <a class="dropdown-item" href="{% url 'stackholder:profile' user.id %}">Profile</a> {% comment %} {% url 'profile' %} {% endcomment %}
+                    </li>
+                    <li>
+                        <a class="dropdown-item" href="{% url 'course:all-course' %}">All coureses</a>
+                    </li>
+                    <li>
+                        <a class="dropdown-item" href="">Course search</a> {% comment %} {% url 'search' %} {% endcomment %}
+                    </li>
+                    <li>
+                        <a class="dropdown-item" href="#">Grades</a>
+                    </li>
+                    <hr>
+                    <li>
+                        <a class="dropdown-item" href="{% url 'stackholder:logout' %}">Log out</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <!-- Right elements -->
+    </div>
+    <!-- Container wrapper -->
+</nav>
+<!-- Navbar -->
