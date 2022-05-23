@@ -22,6 +22,7 @@ class Course(models.Model):
 class Assignment(models.Model):
     course = models.ForeignKey('Course', on_delete=models.CASCADE)
     title = models.CharField(max_length=128)
+    description = models.TextField(blank=True)
     due_date = models.DateField()
     is_active = models.BooleanField(default=True)
 
@@ -29,12 +30,12 @@ class Assignment(models.Model):
         return self.title
 
 class Submission(models.Model):
-    student = models.OneToOneField(Profile, on_delete=models.CASCADE)
-    assignment = models.OneToOneField(Assignment, on_delete=models.CASCADE)
+    student = models.ForeignKey(Profile, on_delete=models.CASCADE)
+    assignment = models.ForeignKey(Assignment, on_delete=models.CASCADE)
     submission_status = models.BooleanField(default=False)
     submission_time = models.DateTimeField(default=timezone.now)
     assignment_file = models.FileField(upload_to = 'uploads/')
-    grade = models.IntegerField()
+    grade = models.IntegerField(blank=True,null=True)
 
     def __str__(self):
         return self.student.user.first_name

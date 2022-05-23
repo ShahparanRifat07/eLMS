@@ -45,7 +45,7 @@
                 <div class="card p-2">
                     <div class="d-flex justify-content-between">
                         <h5>Faculties</h5>
-                        <a class="btn btn-dark btn-sm" href="">All faculties</a>
+                        <a class="btn btn-dark btn-sm" href="{% url 'stackholder:all-faculties' %}">All faculties</a>
                     </div>
                     <table class="table align-middle mt-2 mb-0 bg-white">
                         <thead class="bg-light">
@@ -70,11 +70,11 @@
                                     </div>
                                 </td>
 
-                                <td>CSE</td>
+                                <td>{{faculty.dept}}</td>
                                 <td>
-                                    <button type="button" class="btn btn-link btn-sm btn-rounded">
+                                    <a href="{% url 'stackholder:profile' faculty.user.id %}" type="button" class="btn btn-link btn-sm btn-rounded">
                                         view
-                                    </button>
+                                    </a>
                                 </td>
 
                             </tr>
@@ -116,9 +116,9 @@
 
                                 <td>{{student.dept}}</td>
                                 <td>
-                                    <button type="button" class="btn btn-link btn-sm btn-rounded">
+                                    <a href="{% url 'stackholder:profile' student.user.id %}" type="button" class="btn btn-link btn-sm btn-rounded">
                                         view
-                                    </button>
+                                    </a>
                                 </td>
                             </tr>
                             {% endfor %}

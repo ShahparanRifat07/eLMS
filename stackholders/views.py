@@ -1,3 +1,4 @@
+import profile
 from django.http import HttpResponse
 from django.shortcuts import render,redirect
 from django.contrib.auth.models import User
@@ -15,7 +16,7 @@ def userlogin(request):
         user = authenticate(username = username, password = password)
         print(user)
         if(user is None):
-            return redirect("login")
+            return redirect("stackholder:login")
         else:
             if(user.is_superuser):
                 login(request, user)
@@ -42,7 +43,29 @@ def user_logout(request):
     return redirect('stackholder:login')
 
 def dashboard(request):
-    return render(request, 'stackholders/dashboard.html')
+    if request.user is None:
+        return redirect("stackholder:login")
+    else:
+        if (request.user.is_authenticated):
+            user = request.user
+            profile = Profile.objects.get(user = user)
+            if profile.isFaculty():
+                courses = Course.objects.filter(faculty = profile)
+                context ={
+                    'profile' : profile,
+                    'courses' : courses
+                }
+                return render(request, 'stackholders/dashboard.html',context)
+            else:
+                courses = Course.objects.filter(student = profile)
+                context ={
+                    'profile' : profile,
+                    'courses' : courses
+                }
+                return render(request, 'stackholders/dashboard.html',context)
+        else:
+            return redirect("stackholder:login")
+
 
 def admin_dashboard(request):
     if(request.user.is_superuser):
@@ -102,11 +125,12 @@ def add_faculty(request):
             last_name = request.POST.get('last_name')
             email = request.POST.get('email')
             facult_username = request.POST.get('faculty_username')
+            dept = request.POST.get('dept')
             password = request.POST.get('password')
             user = User(username = facult_username, first_name = first_name,last_name=last_name,email=email)
             user.set_password(password)
             user.save()
-            profile = Profile(user = user,is_faculty=True,is_student=False)
+            profile = Profile(user = user,is_faculty=True,is_student=False,dept = dept)
             profile.save()
             return redirect('stackholder:admin-dashboard')
         else:
@@ -114,6 +138,47 @@ def add_faculty(request):
                 'departments' : departments
             }
             return render(request, 'stackholders/add_faculty.html',context)
+    else:
+        return render(request, 'stackholders/no_access.html')
+
+
+
+def edit_faculty(request , id):
+
+    departments = ['CSE','EEE','BBA','CIVIL']
+
+    if(request.user.is_superuser):
+        if(request.method == "POST"):
+            first_name = request.POST.get('first_name')
+            last_name = request.POST.get('last_name')
+            email = request.POST.get('email')
+            dept = request.POST.get('dept')
+            faculty_profile = Profile.objects.get(id = id)
+            user = User.objects.get(id = faculty_profile.user.id)
+            user.first_name = first_name
+            user.last_name = last_name
+            user.email = email
+            user.save()
+            faculty_profile.dept = dept
+            faculty_profile.save()
+            return redirect('stackholder:admin-dashboard')
+        else:
+            faculty_profile = Profile.objects.get(id = id)
+            context = {
+                'faculty' : faculty_profile,
+                'departments' : departments
+            }
+            return render(request, 'stackholders/edit_faculty.html',context)
+    else:
+        return render(request, 'stackholders/no_access.html')
+
+def delete_faculty(request, id):
+    if(request.user.is_superuser):
+        faculty_profile = Profile.objects.get(id = id)
+        user = User.objects.get(id = faculty_profile.user.id)
+        faculty_profile.delete()
+        user.delete()
+        return redirect('stackholder:all-faculties')
     else:
         return render(request, 'stackholders/no_access.html')
     
@@ -174,6 +239,14 @@ def getAllStudents(request):
     return render(request,'stackholders/all_students.html',context)
 
 
+def getAllFaculties(request):
+    faculties = Profile.objects.filter(is_faculty = True)
+    context = {
+        'faculties' : faculties,
+    }
+    return render(request,'stackholders/all_faculties.html',context)
+
+
 def assign_course(request ,id):
 
     if(request.user.is_superuser):
@@ -184,7 +257,7 @@ def assign_course(request ,id):
             course = Course.objects.get(id = course_id)
             course.student.add(student_profile)
             course.save()
-            return redirect('stackholder:admin-dashboard')
+            return redirect('stackholder:profile', id=student_profile.user.id)
         else:
             student_profile = Profile.objects.get(id = id)
             courses = Course.objects.exclude(student = student_profile)
@@ -196,7 +269,26 @@ def assign_course(request ,id):
     else:
         return render(request, 'stackholders/no_access.html')
 
-def assign_course_to_student(request, studetn_id, course_id):
-    pass
 
 
+
+def profile(request,id):
+    if request.user is None:
+        return redirect("stackholder:login")
+    else:
+        user = User.objects.get(id = id)
+        profile = Profile.objects.get(user = user)
+        if profile.isFaculty():
+            courses = Course.objects.filter(faculty = profile)
+            context ={
+                'profile' : profile,
+                'courses' : courses
+            }
+            return render(request, 'stackholders/profile.html',context)
+        else:
+            courses = Course.objects.filter(student = profile)
+            context ={
+                'profile' : profile,
+                'courses' : courses
+            }
+            return render(request, 'stackholders/profile.html',context)

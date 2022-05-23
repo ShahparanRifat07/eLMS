@@ -116,7 +116,7 @@
         <div class="card">
             <h1>User Profile</h1>
             <div>
-                <a href="{% url 'dashboard' %}">
+                <a href="{% url 'stackholder:dashboard' %}">
                     <p>Dashboard</p>
                 </a>
                 <a href="">
@@ -130,7 +130,12 @@
                     <div id="profileCard" class="card">
                         <img src="http://images6.fanpop.com/image/photos/36800000/Saul-Goodman-Breaking-Bad-saul-goodman-36839059-750-1000.jpg"
                             alt="" height="100px" width="100px">
-                        <h4>011191150 Saul Goodman</h4>
+                        <h4> 
+                            {% if profile.user.is_student %}
+                            <span>{{profile.user.username}}</span> 
+                            {% endif %} 
+                            {{profile.user.first_name}} {{profile.user.last_name}}
+                        </h4>
                     </div>
                 </div>
                 <div class="col-md-9">
@@ -139,19 +144,13 @@
                         <div>
                             <h5>Courses</h5>
                         </div>
+
+                        {% for course in courses %}
                         <div class=" card courseCard">
                             <img src="https://wallpapercave.com/wp/wp6602034.jpg" alt="Fissure in Sandstone" width="150vw" height="130px"/>
-                            <a href="">Spring 221 CSE 3411/CSI 311 (C) : System Analysis and Design</a>
+                            <a href="">{{course.course_code}} ({{course.section}}) : {{course.title}}</a>
                         </div>
-                        <div class=" card courseCard">
-                            <img src="https://wallpapercave.com/wp/wp6602034.jpg" alt="Fissure in Sandstone" width="150vw" height="130px"/>
-                            <a href="">Spring 221 CSE 3411/CSI 311 (C) : System Analysis and Design</a>
-                        </div>
-                        <div class=" card courseCard">
-                            <img src="https://wallpapercave.com/wp/wp6602034.jpg" alt="Fissure in Sandstone" width="150vw" height="130px"/>
-                            <a href="">Spring 221 CSE 3411/CSI 311 (C) : System Analysis and Design</a>
-                        </div>
-                        
+                        {% endfor %} 
                     </div>
                 </div>
 

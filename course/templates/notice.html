@@ -86,14 +86,14 @@
         <div class="card">
             <h1>{{course.course_code}} (A) : {{course.title}}</h1>
             <div>
-                <a href="{% url 'dashboard' %}">
+                <a href="{% url 'stackholder:dashboard' %}">
                     <p>Dashboard</p>
                 </a>
                 <p>My Course</p>
-                <a href="{% url 'course' course.id %}">
+                <a href="{% url 'course:detail-course' course.id %}">
                     <p>{{course.course_code}} (A)</p>
                 </a>
-                <a href="{% url 'notice' course.id notice.id %}">
+                <a href="{% url 'course:notice' course.id notice.id %}">
                     <p>{{notice.title}}</p>
                 </a>
             </div>
@@ -105,11 +105,11 @@
             </div>
             <div class="card">
                 <div>
-                    <p><strong>Makeup class</strong></p>
-                    <p>By <a href="">someone</a> - Wednesday, 23 March 2022, 5:41 PM</p>
+                    <p><strong>{{notice.title}}</strong></p>
+                    <p>By <a href="">{{coures.faculty.user.first_name}} {{coures.faculty.user.last_name}}</a> - {{notice.created_time}}</p>
                 </div>
                 <div>
-                    <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Consequatur autem numquam commodi quod! Totam laboriosam minima, minus blanditiis quo unde corrupti in velit quisquam? Tempora labore veritatis quod hic laudantium.</p>
+                    <p>{{notice.description}}</p>
                 </div>
             </div>
         </div>

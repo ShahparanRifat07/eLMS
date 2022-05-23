@@ -53,17 +53,17 @@
                 </a>
                 <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdownMenuAvatar">
                     <li>
-                        <a class="dropdown-item" href="">011191150 Saul Goodman</a> {% comment %} {% url 'profile' %} {% endcomment %}
+                        <a class="dropdown-item" href="{% url 'stackholder:profile' user.id %}">011191150 Saul Goodman</a> {% comment %} {% url 'profile' %} {% endcomment %}
                     </li>
                     <hr>
                     <li>
-                        <a class="dropdown-item" href="">Dashboard</a> {% comment %} {% url 'dashboard' %} {% endcomment %}
+                        <a class="dropdown-item" href="{% url 'stackholder:dashboard' %}">Dashboard</a> {% comment %} {% url 'dashboard' %} {% endcomment %}
                     </li>
                     <li>
-                        <a class="dropdown-item" href="">Profile</a> {% comment %} {% url 'profile' %} {% endcomment %}
+                        <a class="dropdown-item" href="{% url 'stackholder:profile' user.id %}">Profile</a> {% comment %} {% url 'profile' %} {% endcomment %}
                     </li>
                     <li>
-                        <a class="dropdown-item" href="#">All coureses</a>
+                        <a class="dropdown-item" href="{% url 'course:all-course' %}">All coureses</a>
                     </li>
                     <li>
                         <a class="dropdown-item" href="">Course search</a> {% comment %} {% url 'search' %} {% endcomment %}

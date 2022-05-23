@@ -95,11 +95,11 @@
     <div class="container">
 
         <div class="card">
-            <h1>Spring 221 CSE 4165/CSE 465 (A) : {{course.title}}</h1>
+            <h1>{{coures.course_code}} ({{course.section}}) : {{course.title}}</h1>
             <div>
-                <a href="{% url 'dashboard' %}"><p>Dashboard</p></a>
+                <a href="{% url 'stackholder:dashboard' %}"><p>Dashboard</p></a>
                 <p>My Course</p>
-                <a href="{% url 'course' course.id %}"><p>{{course.course_code}}(A)</p></a>
+                <a href="{% url 'course:detail-course' course.id %}"><p>{{course.course_code}}(A)</p></a>
             </div>
         </div>
 
@@ -107,11 +107,13 @@
             <div>
                 <div class="ms-3">
                     <h3>Notices</h3>
-                    <a class="btn btn-sm" href="">Add Notice</a>
+                    {% if profile.is_faculty and request.user == course.faculty.user %}
+                    <a class="btn btn-sm" href="{% url 'course:add-notice' course.id %}">Add Notice</a>
+                    {% endif %}
                 </div>
                 <div >
-                    {% for notice in course.notice %}
-                    <a href="{% url 'notice' course.id notice.id %}">{{notice.title}}</a>
+                    {% for notice in notices %}
+                    <a href="{% url 'course:notice' course.id notice.id %}">{{notice.title}}</a>
                     {% endfor %}
                 </div>
             </div>
@@ -119,11 +121,13 @@
             <div>
                 <div class="ms-3">
                     <h3>Assignments</h3>
-                    <a class="btn btn-sm" href="">Add Assignment</a>
+                    {% if profile.is_faculty and request.user == course.faculty.user %}
+                    <a class="btn btn-sm" href="{% url 'course:add-assignment' course.id %}">Add Assignment</a>
+                    {% endif %}
                 </div>
                 <div>
-                    {% for assignment in course.assignment %}
-                    <a href="{% url 'submission' course.id assignment.id %}">{{assignment.title}}</a>
+                    {% for assignment in assignments %}
+                    <a href="{% url 'course:submission' course.id assignment.id %}">{{assignment.title}}</a>
                     {% endfor %}
                 </div>
             </div>

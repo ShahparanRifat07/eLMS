@@ -93,8 +93,10 @@
         <div class="card">
             <a href=""><img class="rounded-circle" height="100px" width="100px" src="http://images6.fanpop.com/image/photos/36800000/Saul-Goodman-Breaking-Bad-saul-goodman-36839059-750-1000.jpg" alt="">
             </a>
-            <h1>011191150</h1>
-            <h1>Saul Goodman</h1>
+            {% if profile.is_student %}
+            <h1>{{profile.user.username}}</h1>
+            {% endif %}
+            <h1>{{profile.user.first_name}} {{profile.user.last_name}}</h1>
         </div>
 
         <div class="card">
@@ -118,28 +120,28 @@
         <div class="card">
             <p>Course Overview</p>
             <div class="row">
-                <!-- {% for course in course_list %} -->
+                {% for course in courses %}
+
                 <div class="col-6">
                     <div class="card" style="width: 40vw; height: 15rem;">
                         <div class="bg-image hover-overlay ripple" data-mdb-ripple-color="light">
                             <img src="https://wallpapercave.com/wp/wp6602034.jpg" class="img-fluid" />
-                            <a href="">
+                            <a href="{% url 'course:detail-course' course.id %}">
                                 <div class="mask" style="background-color: rgba(251, 251, 251, 0.15);"></div>
                             </a>
                         </div>
                         <div class="card-body">
-                            <p class="card-text">Dept. of </p>
-                            <a href="" class="text-dark">
-                                <h5 class="card-text"></h5>
+                            <p class="card-text">Dept. of {{course.dept}}</p>
+                            <a href="{% url 'course:detail-course' course.id %}" class="text-dark">
+                                <h5 class="card-text">{{course.course_code}}({{course.section}}): {{course.title}}</h5>
                             </a>
                         </div>
                     </div>
                 </div>
-                <!-- {% endfor %} -->
+                {% endfor %}
             </div>
         </div>
     </div>
-
 
     {% include 'stackholders/footer.html' %}
 

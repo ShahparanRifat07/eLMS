@@ -96,14 +96,14 @@
         <div class="card">
             <h1>{{course.course_code}} (A) : {{course.title}}</h1>
             <div>
-                <a href="{% url 'dashboard' %}">
+                <a href="{% url 'stackholder:dashboard' %}">
                     <p>Dashboard</p>
                 </a>
                 <p>My Course</p>
-                <a href="{% url 'course' course.id %}">
+                <a href="{% url 'course:detail-course' course.id %}">
                     <p>Spring 221 CSE 4165/CSE 465 (A)</p>
                 </a>
-                <a href="{% url 'submission' course.id assignment.id %}">
+                <a href="{% url 'course:submission' course.id assignment.id %}">
                     <p>Assignment1</p>
                 </a>
             </div>
@@ -117,7 +117,7 @@
                     <tbody>
                         <tr>
                             <th scope="row">Submission Status</th>
-                            <td>No attempt</td>
+                            <td>{{submission.submission_status}}</td>
                         </tr>
                         <tr>
                             <th scope="row">Grading status</th>
@@ -125,19 +125,31 @@
                         </tr>
                         <tr>
                             <th scope="row">Due date</th>
-                            <td>Friday, 20 May 2022, 12:00 AM</td>
+                            <td>{{assignment.due_date}}</td>
                         </tr>
                         <tr>
                             <th scope="row">Time remaining</th>
-                            <td>15 days 18 hours</td>
+                            <td>{{due}}</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">File</th>
+                            <td><a href="{{submission.assignment_file}}" download>{{submission.assignment_file}}</td>
                         </tr>
                     </tbody>
                 </table>
             </div>
 
+            {% if submission.submission_status %}
             <div class="submission">
-                <button type="button" class="btn btn-dark">Add submission</button>
+                <button type="button" class="btn btn-dark" disabled>Add submission</button>
             </div>
+            {% else %}
+            <div class="submission">
+                <a href="{% url 'course:add-submission' assignment.id %}" type="button" class="btn btn-dark">Add submission</a>
+            </div>
+            {% endif %}
+
+            
         </div>
 
 
